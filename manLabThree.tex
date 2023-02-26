@@ -18,15 +18,15 @@ The CPU demands for the merchant server and payment gateway will decrease over t
     \hline
     Year & Merchant Server CPU (ms) & Payment Gateway CPU(ms) \\
     \hline
-    1    & 245.9                   & 102.5                   \\
+    1    & 245.9                    & 102.5                   \\
     \hline
-    2    & 153.69                   & 64.06               \\
+    2    & 153.69                   & 64.06                   \\
     \hline
-    3    & 95.70                   & 40.04                  \\
+    3    & 95.70                    & 40.04                   \\
     \hline
-    4    &  61.32                    & 25.56                  \\
+    4    & 61.32                    & 25.56                   \\
     \hline
-    5    & 38.36                  & 15.99                   \\
+    5    & 38.36                    & 15.99                   \\
     \hline
   \end{tabular}
 \end{center}
@@ -36,56 +36,96 @@ Service demands of the new algorithm are 37 \% of the service demands in year on
 Updated merchant server CPU demand: 0.37 * 245.9 = 90.983
 Updated payment gateway CPU demand: 0.37 * 102.5 = 37.925
 \begin{center}
-    \begin{tabular}{ |c|c|c| }
-      \hline
-      Year & Merchant Server CPU (ms) & Payment Gateway CPU(ms) \\
-      \hline
-      3    & 35.54                    & 14.81                   \\
-      \hline
-      4    & 22.69                   & 9.46               \\
-      \hline
-      5    & 14.19                   & 5.92                 \\
-      \hline
-    \end{tabular}
-  \end{center}
+  \begin{tabular}{ |c|c|c| }
+    \hline
+    Year & Merchant Server CPU (ms) & Payment Gateway CPU(ms) \\
+    \hline
+    3    & 35.54                    & 14.81                   \\
+    \hline
+    4    & 22.69                    & 9.46                    \\
+    \hline
+    5    & 14.19                    & 5.92                    \\
+    \hline
+  \end{tabular}
+\end{center}
 
 \subsection{Question 4}
 Required number of CPUs: 1.824817518
 
 \begin{center}
-    Merchant CPU (without algorithm)
-    \begin{tabular}{ |c|c|c|c|c| }
-      \hline
-      Year	& Target tps &	1 CPU SET tps	& CPUs required	& CPUs for 60\% \\
-      \hline
-      1	 & 14 &	1.626677511	 & 9 &	13
-      \hline
-      2	& 19 & 2.602684018	& 8 &	12
-      \hline
-      3	& 23	& 4.164294429	& 6	&9
-      \hline
-      4	& 26 &	6.52297682	& 4 &6
-      \hline
-      5	& 29 &	10.42700285 &	3	& 5
-      \hline
-    \end{tabular}
-  \end{center}
+  Merchant CPU (without algorithm)
+  \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    Year & Target tps & 1 CPU SET tps & CPUs required & CPUs for 60\% \\
+    \hline
+    1    & 14         & 1.626677511   & 9             & 13            \\
+    \hline
+    2    & 19         & 2.602684018   & 8             & 12            \\
+    \hline
+    3    & 23         & 4.164294429   & 6             & 9             \\
+    \hline
+    4    & 26         & 6.52297682    & 4             & 6             \\
+    \hline
+    5    & 29         & 10.42700285   & 3             & 5             \\
+    \hline
+  \end{tabular}
+\end{center}
 
-  \begin{center}
-    Merchant CPU (with algorithm)
-    \begin{tabular}{ |c|c|c|c|c| }
-      \hline
-      Year	& Target tps &	1 CPU SET tps	& CPUs required	& CPUs for 60\% \\
-      \hline
-      1 &14  &	1.626677511	&9&	13
-      \hline
-      2	&19	&  2.602684018	&8	&12
-      \hline
-      3	&23	&  11.25484981	&3	&5
-      \hline
-      4	&26	&  17.62966708	&2&	3
-      \hline
-      5	&29 &	28.18108877	&2&	3      
-      \hline
-    \end{tabular}
-  \end{center}
+\begin{center}
+  Merchant CPU (with algorithm)
+  \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    Year & Target tps & 1 CPU SET tps & CPUs required & CPUs for 60\% \\
+    \hline
+    1    & 14         & 1.626677511   & 9             & 13            \\
+    \hline
+    2    & 19         & 2.602684018   & 8             & 12            \\
+    \hline
+    3    & 23         & 11.25484981   & 3             & 5             \\
+    \hline
+    4    & 26         & 17.62966708   & 2             & 3             \\
+    \hline
+    5    & 29         & 28.18108877   & 2             & 3             \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  Payment Gateway CPU (without algorithm)
+  \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    Year & Target tps & 1 CPU SET tps & CPUs required & CPUs for 60\% \\
+    \hline
+    1    & 14         & 9.76          & 2             & 3             \\
+    \hline
+    2    & 19         & 15.61         & 2             & 3             \\
+    \hline
+    3    & 23         & 24.98         & 1             & 2             \\
+    \hline
+    4    & 26         & 39.12         & 1             & 2             \\
+    \hline
+    5    & 29         & 62.54         & 1             & 2             \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  Payment Gateway CPU (without algorithm)
+  \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    Year & Target tps & 1 CPU SET tps & CPUs required & CPUs for 60\% \\
+    \hline
+    1    & 14         & 9.76          & 2             & 3             \\
+    \hline
+    2    & 19         & 15.61         & 2             & 3             \\
+    \hline
+    3    & 23         & 67.50         & 1             & 2             \\
+    \hline
+    4    & 26         & 105.74        & 1             & 2             \\
+    \hline
+    5    & 29         & 169.02        & 1             & 2             \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
