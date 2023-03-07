@@ -7,23 +7,40 @@
 % Add a section and label it so that we can reference it later
 \section{Desgin Milestone \label{Section::designMilestone}}
 
+\subsection{Problem Statement}
 Problem Statement
 
-What: OpenTogetherTube’s current architecture is haphazardly planned and pretty inefficient.
-Why:  When it comes time to scale up, OTT should be prepared 
+This project aims to model and overhaul the architecture of OpenTogetherTube, a platform for watching videos with 
+friends. The current OTT system runs on node.js, which runs JavScript code in a single thread. An event loop exists 
+with the function of handling incoming requests, but this can get backed up as the number of clients to handle 
+increases. This leads to response times that can be far higher than desired for a responsive platform like OTT.
+A vertical or horizontal approach can be taken in an effort to alleviate the overbearing load. Vertical scaling 
+of the system to make it more network efficient would be effective, but there is an imposed ceiling on its impact.
+Horizontal scaling on the other hand has no such ceiling. By introducing more instances of the backend via 
+node.js on new processing units the load can be distributed and handled much more efficiently. This architectural
+remodel would allow OTT to gain the capacity for large scale expansion moving forward.  
 
 Tagline: Horizontal Scaling for OpenTogetherTube
 
+\subsection{Project Description}
 Project Description
 
 OpenTogetherTube is a very complex piece of software, and we want to be prepared to scale up when the time comes. OTT's current architecture is haphazardly planned and pretty inefficient. 
 Horizontal scaling is taking what is on one computer and putting it on another computer as well. Adding multiple computers can spread the load across multiple devices.
 
+OTT is pretty network efficient, so network throughput is not a huge concern. Modern OSes can handle tons and tons of TCP connections to a single port. However, a more pressing concern is that each user that joins a room puts more load on the Node.js event loop.
+It needs to be possible to spin up and take down nodes on demand.
 
-2 Use Cases
+\subsection{Use Cases}
+
+Use Case 1:
+Use Case: Connecting a client 
+
+Use Case 2:
 
 
+\subsection{Design Sketches}
 Design Sketches
 
-
+\subsection{Architecture Design}
 Architecture Design
