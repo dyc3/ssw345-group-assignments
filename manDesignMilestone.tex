@@ -92,11 +92,25 @@ There are four sequence flows to display our design in action. First, there is j
 
 \section{Architecture Design}
 
-In our configuration, the node containing the loaded room would receive the client's connections through a proxy (Figure \ref{Figure::architecture}). This relieves all nodes from the responsibility of checking for temporary rooms as it is now delegated to the load balancers. As a result, the load balancers handle the task of managing temporary rooms, freeing up the nodes to focus on other responsibilities.
+OTT's current architecture (Figure \ref{Figure::old-architecture}) is a single node.js monolith, backed by Redis
+for caching, pubsub, and login sessions, and PostgreSQL for persistent
+storage, and video metadata caching.
 
-\begin{figure}
+\begin{figure}[htb]
   \centering
-  \scalebox{0.5}{\includegraphics{Figures/designMilestone/Architecture.jpg}}
-  \caption{\label{Figure::architecture} Architecture Design diagram.}
+  \scalebox{0.5}{\includegraphics{Figures/designMilestone/architecture-old.png}}
+  \caption{\label{Figure::old-architecture} Current Configuration}
+\end{figure}
+
+In the new proposed configuration (Figure \ref{Figure::new-architecture}), all
+load balancers would maintain their own hash table of rooms. When a client
+wants to join a room, the load balancer would check its hash table for the
+room. If the room is found, the connection is forwarded to the node that
+has the room loaded. If the room is not found, the connection is closed.
+
+\begin{figure}[htb]
+  \centering
+\scalebox{0.5}{\includegraphics{Figures/designMilestone/architecture-new.png}}
+\caption{\label{Figure::new-architecture} Proposed Configuration}
 \end{figure}
 
