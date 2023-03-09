@@ -105,12 +105,20 @@ storage, and video metadata caching.
 In the new proposed configuration (Figure \ref{Figure::new-architecture}), all
 load balancers would maintain their own hash table of rooms. When a client
 wants to join a room, the load balancer would check its hash table for the
-room. If the room is found, the connection is forwarded to the node that
-has the room loaded. If the room is not found, the connection is closed.
+room. If the room is loaded, the connection is forwarded to the node that
+has the room loaded. If the room is not loaded, the balancer will pick a node,
+and ask if there is a matching unloaded permanent room. If the room is not found,
+the connection is closed.
 
 \begin{figure}[htb]
   \centering
 \scalebox{0.5}{\includegraphics{Figures/designMilestone/architecture-new.png}}
 \caption{\label{Figure::new-architecture} Proposed Configuration}
 \end{figure}
+
+To reduce resource usage, the load balancers would only maintain a single
+connection to each node. This means that the load balancers need to wrap the
+messages sent by clients so that the node can identify the client that sent
+the message, and which room the message was for. The load balancer would need
+to also need to maintain a mapping of which clients have joined which rooms.
 
