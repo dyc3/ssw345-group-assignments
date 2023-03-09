@@ -65,13 +65,13 @@ There are four sequence flows to display our design in action. First, there is j
 
 \begin{figure}
   \centering
-\scalebox{0.7}{\includegraphics{Figures/designMilestone/room.jpg}}
+  \scalebox{0.7}{\includegraphics{Figures/designMilestone/room.jpg}}
   \caption{\label{Figure::room} Joining a room.}
 \end{figure}
 
 \begin{figure}
   \centering
-\scalebox{0.7}{\includegraphics{Figures/designMilestone/unloaded.jpg}}
+  \scalebox{0.7}{\includegraphics{Figures/designMilestone/unloaded.jpg}}
   \caption{\label{Figure::unloaded} Joining an unloaded room.}
 \end{figure}
 
@@ -112,8 +112,8 @@ the connection is closed.
 
 \begin{figure}[htb]
   \centering
-\scalebox{0.5}{\includegraphics{Figures/designMilestone/architecture-new.png}}
-\caption{\label{Figure::new-architecture} Proposed Configuration}
+  \scalebox{0.5}{\includegraphics{Figures/designMilestone/architecture-new.png}}
+  \caption{\label{Figure::new-architecture} Proposed Configuration}
 \end{figure}
 
 To reduce resource usage, the load balancers would only maintain a single
@@ -121,4 +121,12 @@ connection to each node. This means that the load balancers need to wrap the
 messages sent by clients so that the node can identify the client that sent
 the message, and which room the message was for. The load balancer would need
 to also need to maintain a mapping of which clients have joined which rooms.
+The nodes would also need to maintain a mapping of which clients have joined
+from which load balancers so that if a load balancer fails, the node can clean
+up the clients that were connected to it.
 
+\begin{figure}[htb]
+  \centering
+  \scalebox{0.6}{\includegraphics{Figures/designMilestone/uml-load-balancer.png}}
+  \caption{\label{Figure::uml-load-balancer} Proposed Code Structure for Load Balancer}
+\end{figure}
