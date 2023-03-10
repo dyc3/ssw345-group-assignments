@@ -7,9 +7,9 @@
 \section{Problem Statement}
 
 This project aims to model and overhaul the architecture of OpenTogetherTube, a platform for watching videos with
-friends. The current OTT system runs on node.js, which runs JavaScript code in a single thread. An event loop exists
-with the function of handling incoming requests, but this can get backed up as the number of clients to handle
-increases. This leads to response times that can be far higher than desired for a responsive platform like OTT.
+friends. The current OTT system runs on Node.js The V8 JavaScript engine that Node.js uses runs all functions on
+a single thread in an event loop. This event loop has a finite capacity for handling incoming requests and other
+business logic. This leads to response times that can be far higher than desired for a responsive platform like OTT.
 A vertical or horizontal approach can be taken in an effort to alleviate the overbearing load. Vertical scaling
 of the system, like optimizing network usage, would be effective, but there is an imposed ceiling on its impact.
 Horizontal scaling on the other hand has no such ceiling. By introducing more instances of the backend via
