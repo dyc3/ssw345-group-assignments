@@ -15,7 +15,7 @@ public class VeggiePizza extends Pizza {
 		dough = ingredientFactory.createDough();
 		sauce = ingredientFactory.createSauce();
 		cheese = ingredientFactory.createCheese();
-		veggie = ingredientFactory.createVeggies();
+		veggies = ingredientFactory.createVeggies();
 	}
 
 }

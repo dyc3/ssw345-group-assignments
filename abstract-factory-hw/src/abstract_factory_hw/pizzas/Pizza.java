@@ -1,9 +1,6 @@
 package abstract_factory_hw.pizzas;
 
-import abstract_factory_hw.ingredients.Cheese;
-import abstract_factory_hw.ingredients.Clam;
-import abstract_factory_hw.ingredients.Dough;
-import abstract_factory_hw.ingredients.Sauce;
+import abstract_factory_hw.ingredients.*;
 
 public abstract class Pizza {
 	// each pizza has a name and ingredients
@@ -12,6 +9,8 @@ public abstract class Pizza {
 	Sauce sauce;
 	Cheese cheese;
 	Clam clam;
+	Pepperoni pepperoni;
+	Veggies veggies;
 
 	public abstract void prepare();
 
@@ -36,6 +35,7 @@ public abstract class Pizza {
 	}
 
 	public String toString() {
-		return String.format("%s: %s, %s, %s, %s", this.name, this.dough, this.sauce, this.cheese, this.clam);
+		return String.format("%s: %s, %s, %s, %s", this.name, this.dough, this.sauce, this.cheese, this.clam,
+				this.pepperoni, this.veggies);
 	}
 }
