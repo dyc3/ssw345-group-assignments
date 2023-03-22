@@ -6,38 +6,32 @@ public class ChicagoPizzaIngridientFactory extends PizzaIngredientFactory {
 
 	@Override
 	public Dough createDough() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createDough'");
+		return new ThickCrustDough();
 	}
 
 	@Override
 	public Sauce createSauce() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createSauce'");
+		return new PlumTomatoeSauce();
 	}
 
 	@Override
 	public Cheese createCheese() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createCheese'");
+		return new Cheese();
 	}
 
 	@Override
 	public Veggies createVeggies() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createVeggies'");
+		return new Veggies();
 	}
 
 	@Override
 	public Pepperoni createPepperoni() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createPepperoni'");
+		return new Pepperoni();
 	}
 
 	@Override
 	public Clam createClam() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'createClam'");
+		return new Clam();
 	}
 
 }
