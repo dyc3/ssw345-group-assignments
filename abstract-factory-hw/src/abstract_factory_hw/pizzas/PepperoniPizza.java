@@ -13,8 +13,10 @@ public class PepperoniPizza extends Pizza {
 	@Override
 	public void prepare() {
 		System.out.println("Preparing " + name);
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'prepare'");
+		dough = ingredientFactory.createDough();
+		sauce = ingredientFactory.createSauce();
+		cheese = ingredientFactory.createCheese();
+		pepperoni = ingredientFactory.createPepperoni();;
 	}
 
 }
