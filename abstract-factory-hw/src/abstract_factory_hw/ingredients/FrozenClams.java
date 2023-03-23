@@ -1,5 +1,5 @@
 package abstract_factory_hw.ingredients;
 
-public abstract class Clam {
+public class FrozenClams extends Clam {
 
 }
