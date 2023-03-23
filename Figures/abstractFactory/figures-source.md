@@ -1,6 +1,10 @@
+### Pizzas
+
 ```mermaid
 classDiagram
+    direction LR
     class PizzaIngredientFactory {
+        <<Abstract>>
         + createSauce()
         + createDough()
         + createCheese()
@@ -28,6 +32,7 @@ classDiagram
     }
 
     class Pizza{
+        <<Abstract>>
         + String name;
 	    + Dough dough;
 	    + Sauce sauce;
@@ -59,6 +64,25 @@ classDiagram
     PizzaIngredientFactory <|-- NYPizzaIngredientFactory
     PizzaIngredientFactory <|-- ChicagoPizzaIngredientFactory
     PizzaIngredientFactory <-- Pizza
+
+    class Dough {
+        <<Abstract>>
+    }
+    class Sauce {
+        <<Abstract>>
+    }
+    class Cheese {
+        <<Abstract>>
+    }
+    class Clam {
+        <<Abstract>>
+    }
+    class Pepperoni {
+        <<Abstract>>
+    }
+    class Veggies {
+        <<Abstract>>
+    }
 
     ThinCrustDough --|> Dough
     ThickCrustDough --|> Dough
@@ -106,7 +130,38 @@ classDiagram
     Pizza <|-- VeggiePizza
     Pizza <|-- PepperoniPizza
 
+
+```
+
+### Pizza stores
+
+```mermaid
+classDiagram
+    class Pizza{
+        <<Abstract>>
+        + String name;
+	    + Dough dough;
+	    + Sauce sauce;
+	    + Cheese cheese;
+	    + Clam clam;
+        + Pepperoni pepperoni;
+        + Veggies[] veggies;
+        + bake()
+        + cut()
+        + box()
+        + preapre()
+        + String getName()
+        + String toString()
+    }
+
+    Pizza <|-- CheesePizza
+    Pizza <|-- ClamPizza
+    Pizza <|-- VeggiePizza
+    Pizza <|-- PepperoniPizza
+
+
     class PizzaStore {
+        <<Abstract>>
         - Pizza createPizza(String type)
         + Pizza orderPizza(String type)
     }
@@ -125,6 +180,10 @@ classDiagram
 
     NYPizzaStore --|> PizzaStore
     ChicagoPizzaStore --|> PizzaStore
+
+    PizzaStore --> Pizza
+    NYPizzaStore ..> Pizza
+    ChicagoPizzaStore ..> Pizza
 
     NYPizzaStore ..> CheesePizza
     ChicagoPizzaStore ..> CheesePizza
