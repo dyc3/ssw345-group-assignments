@@ -9,7 +9,7 @@ public abstract class PizzaIngredientFactory {
 
 	public abstract Cheese createCheese();
 
-	public abstract Veggies createVeggies();
+	public abstract Veggies[] createVeggies();
 
 	public abstract Pepperoni createPepperoni();
 

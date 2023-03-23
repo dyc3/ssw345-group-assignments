@@ -16,22 +16,23 @@ public class ChicagoPizzaIngridientFactory extends PizzaIngredientFactory {
 
 	@Override
 	public Cheese createCheese() {
-		return new Cheese();
+		return new MozzarellaCheese();
 	}
 
 	@Override
-	public Veggies createVeggies() {
-		return new Veggies();
+	public Veggies[] createVeggies() {
+		Veggies veggies[] = { new Garlic(), new Onion(), new Mushroom(), new RedPepper() };
+		return veggies;
 	}
 
 	@Override
 	public Pepperoni createPepperoni() {
-		return new Pepperoni();
+		return new SlicedPepperoni();
 	}
 
 	@Override
 	public Clam createClam() {
-		return new Clam();
+		return new FrozenClams();
 	}
 
 }
