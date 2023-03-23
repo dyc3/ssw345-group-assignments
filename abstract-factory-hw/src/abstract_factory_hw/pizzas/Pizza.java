@@ -10,7 +10,7 @@ public abstract class Pizza {
 	Cheese cheese;
 	Clam clam;
 	Pepperoni pepperoni;
-	Veggies veggies;
+	Veggies[] veggies;
 
 	public abstract void prepare();
 
