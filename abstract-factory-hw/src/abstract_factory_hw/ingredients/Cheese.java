@@ -1,5 +1,5 @@
 package abstract_factory_hw.ingredients;
 
-public class Cheese {
+public abstract class Cheese {
 
 }

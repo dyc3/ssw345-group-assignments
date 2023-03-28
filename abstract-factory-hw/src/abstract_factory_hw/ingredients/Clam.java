@@ -1,5 +1,5 @@
 package abstract_factory_hw.ingredients;
 
-public class Clam {
+public abstract class Clam {
 
 }

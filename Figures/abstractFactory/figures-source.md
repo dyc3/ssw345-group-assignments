@@ -1,6 +1,10 @@
+### Pizzas
+
 ```mermaid
 classDiagram
+    direction LR
     class PizzaIngredientFactory {
+        <<Abstract>>
         + createSauce()
         + createDough()
         + createCheese()
@@ -28,11 +32,14 @@ classDiagram
     }
 
     class Pizza{
+        <<Abstract>>
         + String name;
 	    + Dough dough;
 	    + Sauce sauce;
 	    + Cheese cheese;
 	    + Clam clam;
+        + Pepperoni pepperoni;
+        + Veggies[] veggies;
         + bake()
         + cut()
         + box()
@@ -55,13 +62,42 @@ classDiagram
     }
 
     PizzaIngredientFactory <|-- NYPizzaIngredientFactory
-    PizzaIngredientFactory <-- Pizza
     PizzaIngredientFactory <|-- ChicagoPizzaIngredientFactory
+    PizzaIngredientFactory <-- Pizza
+
+    class Dough {
+        <<Abstract>>
+    }
+    class Sauce {
+        <<Abstract>>
+    }
+    class Cheese {
+        <<Abstract>>
+    }
+    class Clam {
+        <<Abstract>>
+    }
+    class Pepperoni {
+        <<Abstract>>
+    }
+    class Veggies {
+        <<Abstract>>
+    }
 
     ThinCrustDough --|> Dough
     ThickCrustDough --|> Dough
     PlumTomatoeSauce --|> Sauce
     MarinaraSauce --|> Sauce
+    FreshClams --|> Clam
+    FrozenClams --|> Clam
+    Garlic --|> Veggies
+    Onion --|> Veggies
+    Mushroom --|> Veggies
+    RedPepper --|> Veggies
+    MozzarellaCheese --|> Cheese
+    ReggianoCheese --|> Cheese
+    SlicedPepperoni --|> Pepperoni
+
     Dough <-- Pizza
     Sauce <-- Pizza
     Cheese <-- Pizza
@@ -70,21 +106,120 @@ classDiagram
     Veggies <-- Pizza
 
 
-    NYPizzaIngredientFactory ..> Cheese
-    ChicagoPizzaIngredientFactory ..> Cheese
-    NYPizzaIngredientFactory ..> Clam
-    ChicagoPizzaIngredientFactory ..> Clam
+    NYPizzaIngredientFactory ..> ReggianoCheese
+    ChicagoPizzaIngredientFactory ..> MozzarellaCheese
+    NYPizzaIngredientFactory ..> FreshClams
+    ChicagoPizzaIngredientFactory ..> FrozenClams
     NYPizzaIngredientFactory ..> ThinCrustDough
     ChicagoPizzaIngredientFactory ..> ThickCrustDough
-    NYPizzaIngredientFactory ..> Pepperoni
-    ChicagoPizzaIngredientFactory ..> Pepperoni
+    NYPizzaIngredientFactory ..> SlicedPepperoni
+    ChicagoPizzaIngredientFactory ..> SlicedPepperoni
     NYPizzaIngredientFactory ..> MarinaraSauce
     ChicagoPizzaIngredientFactory ..> PlumTomatoeSauce
-    NYPizzaIngredientFactory ..> Veggies
-    ChicagoPizzaIngredientFactory ..> Veggies
+    NYPizzaIngredientFactory ..> Garlic
+    ChicagoPizzaIngredientFactory ..> Garlic
+    NYPizzaIngredientFactory ..> Onion
+    ChicagoPizzaIngredientFactory ..> Onion
+    NYPizzaIngredientFactory ..> Mushroom
+    ChicagoPizzaIngredientFactory ..> Mushroom
+    NYPizzaIngredientFactory ..> RedPepper
+    ChicagoPizzaIngredientFactory ..> RedPepper
+
     Pizza <|-- CheesePizza
     Pizza <|-- ClamPizza
     Pizza <|-- VeggiePizza
     Pizza <|-- PepperoniPizza
 
+
+```
+
+### Pizza stores
+
+```mermaid
+classDiagram
+    class Pizza{
+        <<Abstract>>
+        + String name;
+	    + Dough dough;
+	    + Sauce sauce;
+	    + Cheese cheese;
+	    + Clam clam;
+        + Pepperoni pepperoni;
+        + Veggies[] veggies;
+        + bake()
+        + cut()
+        + box()
+        + preapre()
+        + String getName()
+        + String toString()
+    }
+
+    Pizza <|-- CheesePizza
+    Pizza <|-- ClamPizza
+    Pizza <|-- VeggiePizza
+    Pizza <|-- PepperoniPizza
+
+
+    class PizzaStore {
+        <<Abstract>>
+        - Pizza createPizza(String type)
+        + Pizza orderPizza(String type)
+    }
+
+    class NYPizzaStore {
+        - Pizza createPizza(String type)
+    }
+
+    class ChicagoPizzaStore {
+        - Pizza createPizza(String type)
+    }
+
+    class PizzaStoreFactory {
+        + PizzaStore getPizzaStore(String)
+    }
+
+    NYPizzaStore --|> PizzaStore
+    ChicagoPizzaStore --|> PizzaStore
+
+    PizzaStore --> Pizza
+    NYPizzaStore ..> Pizza
+    ChicagoPizzaStore ..> Pizza
+
+    NYPizzaStore ..> CheesePizza
+    ChicagoPizzaStore ..> CheesePizza
+    NYPizzaStore ..> ClamPizza
+    ChicagoPizzaStore ..> ClamPizza
+    NYPizzaStore ..> PepperoniPizza
+    ChicagoPizzaStore ..> PepperoniPizza
+    NYPizzaStore ..> VeggiePizza
+    ChicagoPizzaStore ..> VeggiePizza
+
+    PizzaStoreFactory --> NYPizzaStore
+    PizzaStoreFactory --> ChicagoPizzaStore
+
+```
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Application
+    participant PizzaStoreFactory
+    participant NYPizzaStore
+    participant NYPizzaIngredientFactory
+    participant NYVeggiePizza
+    participant Ingredients
+
+    User->>+Application: order NY veggie pizza
+    Application->>+PizzaStoreFactory: create NY franchise
+    PizzaStoreFactory->>-Application: return NYPizzaStore
+    Application->>+NYPizzaStore: createPizza()
+    NYPizzaStore->>NYPizzaIngredientFactory: create ingredient factory
+    NYPizzaIngredientFactory->>NYPizzaStore:
+    NYPizzaStore->>+NYVeggiePizza: create pizza
+    NYVeggiePizza->>NYPizzaIngredientFactory: instantiate NY ingredients
+    NYVeggiePizza->>Ingredients: apply dough, sauce, cheese, veggies
+    Ingredients->>NYVeggiePizza:
+    NYVeggiePizza->>-NYPizzaStore: return pizza
+    NYPizzaStore->>-Application: return NYVeggiePizza
+    Application->>-User: print pizza
 ```

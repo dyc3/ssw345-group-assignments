@@ -1,7 +1,7 @@
 package abstract_factory_hw.ingredients;
 
-public class MarinaraSauce extends Sauce {
+public class FreshClams extends Clam {
 	public String toString() {
-		return "Marinara Sauce";
+		return "Fresh Clams";
 	}
 }
