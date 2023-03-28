@@ -198,3 +198,28 @@ classDiagram
     PizzaStoreFactory --> ChicagoPizzaStore
 
 ```
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Application
+    participant PizzaStoreFactory
+    participant NYPizzaStore
+    participant NYPizzaIngredientFactory
+    participant NYVeggiePizza
+    participant Ingredients
+
+    User->>+Application: order NY veggie pizza
+    Application->>+PizzaStoreFactory: create NY franchise
+    PizzaStoreFactory->>-Application: return NYPizzaStore
+    Application->>+NYPizzaStore: createPizza()
+    NYPizzaStore->>NYPizzaIngredientFactory: create ingredient factory
+    NYPizzaIngredientFactory->>NYPizzaStore:
+    NYPizzaStore->>+NYVeggiePizza: create pizza
+    NYVeggiePizza->>NYPizzaIngredientFactory: instantiate NY ingredients
+    NYVeggiePizza->>Ingredients: apply dough, sauce, cheese, veggies
+    Ingredients->>NYVeggiePizza:
+    NYVeggiePizza->>-NYPizzaStore: return pizza
+    NYPizzaStore->>-Application: return NYVeggiePizza
+    Application->>-User: print pizza
+```
