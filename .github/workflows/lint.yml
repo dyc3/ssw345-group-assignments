@@ -14,8 +14,3 @@ jobs:
       - run: npm install -g @mermaid-js/mermaid-cli
       - name: Ensure generated files are up to date
         run: ./final-project/ensure-generated.sh
-        continue-on-error: true
-      - uses: actions/upload-artifact@v3
-        with:
-          name: figures
-          path: final-project/Figures/
