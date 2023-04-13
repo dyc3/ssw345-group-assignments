@@ -43,13 +43,19 @@ Monoliths must gossip:
   \item at a maximum interval of 20 seconds (eg. if 20 seconds pass without a room being loaded or unloaded, the Monolith must gossip)
 \end{itemize}
 
-The gossip message must contain:
+The gossip message must contain: (see \ref{Figure::gossip-class-diag})
 \begin{itemize}
   \item a list of rooms that the Monolith is hosting
   \item the load of the Monolith
 \end{itemize}
 
 The Monoliths will know where to send the gossip messages by reading a configuration file. This file will contain a list of Balancer nodes, and the Monolith will send the gossip messages to each of them.
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/gossip-class-diag.png}}
+  \caption{\label{Figure::gossip-class-diag} Gossip class diagram.}
+\end{figure}
 
 \subsection{Messaging Protocol}
 
