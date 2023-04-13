@@ -1,10 +1,60 @@
 \chapter{Join Process \\
-  \small{\textit{-- Author Name}}
+  \small{\textit{-- Carson McManus}}
   \index{Chapter!join-process}
   \index{join process}
   \index{room join}
   \label{Chapter::JoinProcess}}
 
+There are 2 types of nodes in this architecture. The first type is the OTT Monolith \index{monolith}, which refers to the current node.js monolithic server. The second type is the Smart Load Balancer \index{load balancer}, which needs to know which monoliths control which rooms, and how to route requests to the correct monolith.
+
+For the sake of simplicity, the initial implementation of the Balancer will be a single node. This can be upgraded to a cluster of load balancers in the future.
+
 
 TODO: describe the room join process
 TODO: be sure to talk about how clients are authorized
+
+\section{Joining a Loaded Room \index{loaded room}}
+
+In the Monolith, "loading" a room is literally creating an instance of a room in memory.
+
+Shown in figure \ref{Figure::join-room-happy-path}, the client is joining a room that is already loaded on a Monolith node. First, the client initiates a websocket \index{websocket} connection to the Balancer, in the form of a HTTP request with the CONNECT method. The client immediately sends an "auth" message to convey their identity to the Balancer. The Balancer looks at the path of the request and extracts the room name, and references it's internal hashmap to find the monolith that is hosting the room. The Balancer then opens a websocket connection using the auth token provided by the client.
+
+If the client fails to provide an auth token, the Balancer must terminate the connection as "timed out".
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/join-room-happy-path.png}}
+  \caption{\label{Figure::join-room-happy-path} Joining an already loaded room, the most simple scenario.}
+\end{figure}
+
+\subsection{Monolith Gossip Protocol \index{Monolith} \index{gossip}}
+
+Balancers must be able to determine which Monolith nodes are hosting which rooms.
+
+Monolith nodes must gossip \cite{wikigossip} \index{gossip} to Balancer nodes to inform them of the rooms that they have loaded. This also implies that they must notify all Balancers of their existance on startup. The Balancer must maintain a hashmap of room names to Monolith nodes.
+
+They must also maintain a hashmap of monolith nodes to a list of rooms that they are hosting to verify that only one monolith is hosting a room at a time. When the gossip is received, the Balancer must check to see if  In the event that a Balancer finds that more than one Monolith is hosting a room, it must randomly select one of the Monoliths to be the authoritative node for that room, and inform the other Monoliths that they must unload the room. This method will not work as effectively if there is more than one Balancer, but it is a simple solution for the initial implementation.
+
+Monoliths must gossip:
+\begin{itemize}
+  \item on startup
+  \item when a room is loaded
+  \item when a room is unloaded
+  \item at a maximum interval of 20 seconds (eg. if 20 seconds pass without a room being loaded or unloaded, the Monolith must gossip)
+\end{itemize}
+
+The gossip message must contain:
+\begin{itemize}
+  \item a list of rooms that the Monolith is hosting
+  \item the load of the Monolith
+\end{itemize}
+
+The Monoliths will know where to send the gossip messages by reading a configuration file. This file will contain a list of Balancer nodes, and the Monolith will send the gossip messages to each of them.
+
+\subsection{Messaging Protocol}
+
+The Balancer must maintain a maximum of one websocket connection to each Monolith node. This implies that the Balancer must be able to convey the user identity of messages sent to the Monolith.
+
+\section{Creating or Loading Rooms}
+
+\subsection{Monolith Node Selection}
