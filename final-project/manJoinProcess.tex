@@ -63,4 +63,16 @@ The Balancer must maintain a maximum of one websocket connection to each Monolit
 
 \section{Creating or Loading Rooms}
 
+The client will have two room creation options: generating a temporary room with a random token and establishing a permanent room that can be rejoined in the future. 
+
+Both creation options follow similar paths, as shown in figure \ref{Figure::create-room-diag}. The client starts a new Balancer connection through the websocket, then the Balancer is responsible for deciding which node is best fit to handle the additional room. Once the right one is picked, the room is instantiated on that Monolith and the client connects.
+
+The main difference lies in what happens after the initial usage of the room. With a temporary room, after the clients disconnect the room is deleted from the Balancer hashmap of Monoliths and rooms. With a permanent room, the unique token is maintained and can be hosted again at any point in the future.
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/create-room-diag.png}}
+  \caption{\label{Figure::create-room-diag} Creating or generating a new room.}
+\end{figure}
+
 \subsection{Monolith Node Selection}
