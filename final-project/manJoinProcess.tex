@@ -77,3 +77,7 @@ When a user attempts to join a permanent room that is not loaded in OpenTogether
   \scalebox{0.57}{\includegraphics{Figures/unloaded-room.png}}
   \caption{\label{Figure::unloaded-room} Unloaded Room Sequence Diagram.}
 \end{figure}
+
+For the sequence diagram above, it's worth noting that the current implementation doesn't necessarily use an HTTP 
+redirect to direct the user to the requested room. Instead, the response from the server may include a URL or other
+information that allows the user's client to connect directly to the appropriate room instance.
