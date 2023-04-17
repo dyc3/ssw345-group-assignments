@@ -1,0 +1,10 @@
+flowchart LR
+    Clients[Web clients] --> Balancer
+
+    A[Monolith]
+    B[Monolith]
+    C[Monolith]
+
+    Balancer --> A
+    Balancer --> B
+    Balancer --> C
