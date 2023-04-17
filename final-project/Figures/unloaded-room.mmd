@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor User
+    participant Server
+    participant Database
+    
+    User->>+Server: Join Permanent Room
+    Server->>+Database: Check if Room is Loaded
+    alt Room is Loaded
+        Server-->>-User: Redirect to Room
+    else Room is Not Loaded
+        Database-->>Server: Load Room
+        Server->>+Server: Create New Room Instance
+        Server->>+Server: Add to Loaded Rooms
+        Server-->>-User: Redirect to Room
+    end

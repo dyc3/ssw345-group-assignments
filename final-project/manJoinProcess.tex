@@ -64,3 +64,16 @@ The Balancer must maintain a maximum of one websocket connection to each Monolit
 \section{Creating or Loading Rooms}
 
 \subsection{Monolith Node Selection}
+
+\subsection{Unloaded Room}
+When a user attempts to join a permanent room that is not loaded in OpenTogetherTube, the server undergoes a series of
+ events. Firstly, the server receives a request from the user to join a permanent room. Secondly, it checks if the room 
+ is currently loaded in memory, and if it is, the user is directed to the room. However, if the room is not loaded, the 
+ server loads the room from the database and creates a new instance of the room. The new room instance is then added to a 
+ collection of loaded rooms by the server. Once the room has been successfully loaded, the user is directed to the room.
+
+ \begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/unloaded-room.png}}
+  \caption{\label{Figure::unloaded-room} Unloaded Room Sequence Diagram.}
+\end{figure}
