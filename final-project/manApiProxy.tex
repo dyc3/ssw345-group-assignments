@@ -5,4 +5,11 @@
 
 
 TODO: describe how REST API requests will be forwarded from the load balancers to the OTT monoliths
+
+When a REST API request is made to the OpenTogetherTube system, it is first received by the NGINX reverse proxy server. 
+NGINX then forwards the request to one of the OTT monoliths based on the current load balancing algorithm in use. 
+The monolith that receives the request will then process it and return a response, which will be sent back to the 
+NGINX reverse proxy server. The reverse proxy server will then forward the response back to the client that made the 
+original request.
+
 TODO: be sure to talk about how request credentials will be forwarded
