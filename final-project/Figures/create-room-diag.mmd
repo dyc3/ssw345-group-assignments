@@ -3,12 +3,12 @@ title: Creating or Generating a Room
 ---
 sequenceDiagram
     actor Alice
-    participant OTT as OTT website
+    participant OTT as Browser
     participant L as Load Balancer
     participant N as Monolith
     alt Room Generation
     Alice->>+OTT: Hello, I want to generate a room
-    OTT->>+L: Start connection
+    OTT->>+L: POST /api/room/generate
     Note over L: Determines which node has least load
     L->>+N: New room generated
     N->>-L: Room "uuid" successfully generated
@@ -17,7 +17,7 @@ sequenceDiagram
     Note over Alice,N: The room is now ready for Alice to join
     else Room Creation
     Alice->>+OTT: Hello, I want to create room "foo"
-    OTT->>+L: Send user inputs
+    OTT->>+L: POST /api/room/create
     Note over L: Determines which node has least load
     L->>+N: "foo" is created
     N->>-L: Room successfully created
