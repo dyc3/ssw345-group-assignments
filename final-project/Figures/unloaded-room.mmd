@@ -1,0 +1,32 @@
+sequenceDiagram
+    actor User
+    participant Balancer
+    participant Monolith1 as Monolith1
+    participant Monolith2 as Monolith2
+    participant Database
+
+    User->>+Balancer: Join Permanent Room
+    Balancer->>+Monolith1: Forward Request
+    Monolith1->>+Database: Check if Room is Loaded
+    alt Room is Loaded
+        Monolith1-->>-Balancer: Redirect to Room
+        Balancer-->>User: Send Room Information
+    else Room is Not Loaded
+        Database-->>Monolith1: Load Room
+        Monolith1->>+Monolith1: Create New Room Instance
+        Monolith1->>+Monolith1: Add to Loaded Rooms
+        Monolith1-->>-Balancer: Redirect to Room
+        Balancer-->>User: Send Room Information
+    end
+    Balancer->>+Monolith2: Forward Request
+    Monolith2->>+Database: Check if Room is Loaded
+    alt Room is Loaded
+        Monolith2-->>-Balancer: Redirect to Room
+        Balancer-->>User: Send Room Information
+    else Room is Not Loaded
+        Database-->>Monolith2: Load Room
+        Monolith2->>+Monolith2: Create New Room Instance
+        Monolith2->>+Monolith2: Add to Loaded Rooms
+        Monolith2-->>-Balancer: Redirect to Room
+        Balancer-->>User: Send Room Information
+    end

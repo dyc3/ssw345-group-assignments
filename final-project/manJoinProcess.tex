@@ -72,3 +72,22 @@ Room generation requires no inputs from the client, instead a new uuid is automa
 \end{figure}
 
 \subsection{Monolith Node Selection}
+
+\subsection{Unloaded Room}
+When a user tries to join a permanent room in OpenTogetherTube, the request is first received by the load balancer. 
+The load balancer forwards the request to one of the available servers (Server1 or Server2) based on the current load
+balancing algorithm. The selected server then checks if the requested room is already loaded by querying the database. 
+If the room is already loaded, the server redirects the user to the room. Otherwise, the server requests the database to 
+load the room. Once the room is loaded, the server creates a new room instance and adds it to the list of loaded rooms. 
+The server then redirects the user to the loaded room through the load balancer. If the first server doesn't have the
+room loaded, the load balancer forwards the request to the second server and the same process is repeated.
+
+ \begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/unloaded-room.png}}
+  \caption{\label{Figure::unloaded-room} Unloaded Room Sequence Diagram.}
+\end{figure}
+
+For the sequence diagram above, it's worth noting that the current implementation doesn't necessarily use an HTTP 
+redirect to direct the user to the requested room. Instead, the response from the server may include a URL or other
+information that allows the user's client to connect directly to the appropriate room instance.
