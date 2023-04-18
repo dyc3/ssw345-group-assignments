@@ -6,18 +6,18 @@ sequenceDiagram
     participant OTT as OTT website
     participant L as Load Balancer
     participant N as Monolith
-    alt temporary room
-    Alice->>+OTT: Hello, I want to generate a temporary room
-    OTT->>+L: Serve new connection
+    alt Room Generation
+    Alice->>+OTT: Hello, I want to generate a room
+    OTT->>+L: Send new uuid
     Note over L: Determines which node has least load
-    L->>+N: "temp" is generated
+    L->>+N: Temporary room is generated
     N->>-L: Joined
     L->>-OTT: Joined
     OTT->>-Alice: Joined
     Note over Alice,N: Alice's connection to OTT is transparently proxied to Node
-    else permanent room
+    else Room Creation
     Alice->>+OTT: Hello, I want to create room "foo".
-    OTT->>+L: Serve new connection
+    OTT->>+L: Send user inputs
     Note over L: Determines which node has least load
     L->>+N: "foo" is created
     N->>-L: Joined
