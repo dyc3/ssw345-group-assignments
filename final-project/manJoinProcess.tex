@@ -57,10 +57,6 @@ The Monoliths will know where to send the gossip messages by reading a configura
   \caption{\label{Figure::gossip-class-diag} Gossip class diagram.}
 \end{figure}
 
-\subsection{Messaging Protocol}
-
-The Balancer must maintain a maximum of one websocket connection to each Monolith node. This implies that the Balancer must be able to convey the user identity of messages sent to the Monolith.
-
 \section{Creating or Loading Rooms}
 
 The client will have three options: generating a temporary room with a uuid, creating a temporary room with inputs, and creating a permanent room that can be rejoined in the future.
