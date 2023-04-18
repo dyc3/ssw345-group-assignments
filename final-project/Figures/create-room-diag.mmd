@@ -8,15 +8,15 @@ sequenceDiagram
     participant N as Monolith
     alt Room Generation
     Alice->>+OTT: Hello, I want to generate a room
-    OTT->>+L: Send new uuid
+    OTT->>+L: Start connection
     Note over L: Determines which node has least load
-    L->>+N: Temporary room is generated
+    L->>+N: New room "uuid" generated
     N->>-L: Joined
     L->>-OTT: Joined
     OTT->>-Alice: Joined
     Note over Alice,N: Alice's connection to OTT is transparently proxied to Node
     else Room Creation
-    Alice->>+OTT: Hello, I want to create room "foo".
+    Alice->>+OTT: Hello, I want to create room "foo"
     OTT->>+L: Send user inputs
     Note over L: Determines which node has least load
     L->>+N: "foo" is created
