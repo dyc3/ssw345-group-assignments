@@ -57,10 +57,37 @@ The Monoliths will know where to send the gossip messages by reading a configura
   \caption{\label{Figure::gossip-class-diag} Gossip class diagram.}
 \end{figure}
 
-\subsection{Messaging Protocol}
-
-The Balancer must maintain a maximum of one websocket connection to each Monolith node. This implies that the Balancer must be able to convey the user identity of messages sent to the Monolith.
-
 \section{Creating or Loading Rooms}
 
+The client will have three options: generating a temporary room with a uuid, creating a temporary room with inputs, and creating a permanent room that can be rejoined in the future.
+
+The options follow similar sequence paths, as shown in figure \ref{Figure::create-room-diag}. The client starts a new Balancer connection through the websocket, then the Balancer is responsible for deciding which node is best fit to handle the additional room. Once the right one is picked, the room is instantiated on that Monolith and the client connects.
+
+Room generation requires no inputs from the client, instead a new uuid is automatically used as the room name. On the other hand, room creation has the client submit a set of inputs for the name and settings of the room. Generation only provides temporary rooms that are discarded after the room is unloaded. Creation can provide either temporary or permanent rooms, depending on the client inputs during the initial process. The settings for permanent rooms are stored in postgres even after being unloaded so that they persist and can be called upon to be reloaded at any point in the future.
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/create-room-diag.png}}
+  \caption{\label{Figure::create-room-diag} Creating or generating a new room.}
+\end{figure}
+
 \subsection{Monolith Node Selection}
+
+\subsection{Unloaded Room}
+When a user tries to join a permanent room in OpenTogetherTube, the request is first received by the load balancer. 
+The load balancer forwards the request to one of the available servers (Server1 or Server2) based on the current load
+balancing algorithm. The selected server then checks if the requested room is already loaded by querying the database. 
+If the room is already loaded, the server redirects the user to the room. Otherwise, the server requests the database to 
+load the room. Once the room is loaded, the server creates a new room instance and adds it to the list of loaded rooms. 
+The server then redirects the user to the loaded room through the load balancer. If the first server doesn't have the
+room loaded, the load balancer forwards the request to the second server and the same process is repeated.
+
+ \begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/unloaded-room.png}}
+  \caption{\label{Figure::unloaded-room} Unloaded Room Sequence Diagram.}
+\end{figure}
+
+For the sequence diagram above, it's worth noting that the current implementation doesn't necessarily use an HTTP 
+redirect to direct the user to the requested room. Instead, the response from the server may include a URL or other
+information that allows the user's client to connect directly to the appropriate room instance.
