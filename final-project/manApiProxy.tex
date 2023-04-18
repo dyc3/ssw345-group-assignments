@@ -4,23 +4,22 @@
   \label{Chapter::RestApiProxy}}
 
 \section{Forwarding API Requests}
-When a REST API request is made to OpenTogetherTube, the request is first received by the load balancer. The 
-load balancer then selects one of the OTT monoliths based on the current load balancing algorithm, and forwards the 
-request to the selected monolith's nginx reverse proxy server. The nginx reverse proxy server receives the request and 
-forwards it to the corresponding monolith for processing. 
-The monolith processes the request and sends a response back to its nginx reverse proxy server. The reverse proxy server 
-then returns the response to the load balancer, which in turn sends the response back to the client that made the original
-request.
+When a REST API request is made to OpenTogetherTube, the request is first received by the load balancer
+ acting as the reverse proxy for API requests. The load balancer then selects one of the OTT monoliths based
+  on the current load balancing algorithm and forwards the request to the selected monolith. The monolith processes 
+  the request and sends a response back to the load balancer acting as the reverse proxy. The load balancer then returns 
+  the response to the client that made the original request.
 
 \begin{figure}[!htb]
   \centering
   \scalebox{0.57}{\includegraphics{Figures/api-balancer.png}}
-  \caption{\label{Figure::api-balancer} Unloaded Room Sequence Diagram.}
+  \caption{\label{Figure::api-balancer} API Balancer Flowchart.}
 \end{figure}
 
 \section{Forwarding Requests Credentials}
 
-OpenTogetherTube platform uses JSON Web Tokens to authenticate and authorize users. When a user logs in, the 
-server generates a JWT that is stored in the browser's local storage and included in all subsequent requests made
-by the user. The server verifies the JWT to ensure that the user is authenticated and has permission to access the 
-requested video stream.
+OpenTogetherTube platform uses tokens to authenticate and authorize users. When a user logs in, the
+server generates a token that is stored in the browser's local storage and included in all subsequent requests made
+by the user. The server verifies the token to ensure that the user is authenticated and has permission to access the
+requested video stream. The token is used to look up the session information in Redis, which allows the server to 
+retrieve the user's permissions and session state.
