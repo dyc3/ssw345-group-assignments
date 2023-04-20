@@ -5,13 +5,35 @@
   \index{load balancer}
   \label{Chapter::SolutionOverview}}
 
+\section{Current Architecture}
+
+The Monolith's \index{Monolith} current internals is shown in Figure \ref{fig:monolith-class-current}.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{Figures/monolith-class-current.png}
+  \caption{Class diagram for the Monolith's current internals}
+  \label{fig:monolith-class-current}
+\end{figure}
+
+It suffers from years of ad-hoc development, and is not designed to scale. It's riddled with technical debt from previous attempts at horizontal scaling \index{horizontal scaling}. In it's current state, it is not possible to add more monoliths without causing room synchronization issues. The solution to this problem is to use a load balancer \index{load balancer}.
+
 \section{A Smart Load Balancer}
 
-The solution to scaling OTT is to use a load balancer.
+The solution to scaling OTT is to use a load balancer. The Balancer will be an optional, seperate component that would be deployed alongside the Monoliths.
 
 \subsection{What is a load balancer?}
 
 A load balancer is a server that distributes load across multiple servers. It is a common solution to the problem of scaling a web application.
+
+The load balancer must be able to:
+\begin{itemize}
+  \item Distribute load across multiple Monoliths
+  \item Forward HTTP requests to the correct Monolith
+  \item Send WebSocket messages to the correct Monolith
+\end{itemize}
+
+These requirements imply that a normal HTTP load balancer (like nginx) will not work, and the need for a specialized implementation. The specifics of how the load balancer will work will be discussed in the following chapters.
 
 \subsection{New Architecture}
 
@@ -20,15 +42,6 @@ With the load balancer, OTT's architecture will look like this: Figure \ref{fig:
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.4\textwidth]{Figures/ott-architecture-with-load-balancer.png}
-  \caption{OTT's architecture with a load balancer}
+  \caption{High level overview of OTT's new architecture with a load balancer}
   \label{fig:ott-architecture-with-load-balancer}
 \end{figure}
-
-The load balancer must be able to:
-\begin{itemize}
-  \item Distribute load across multiple servers
-  \item Forward HTTP requests to the correct Monolith
-  \item Send WebSocket messages to the correct Monolith
-\end{itemize}
-
-These requirements imply that a normal HTTP load balancer (like nginx) will not work, and the need for a specialized implementation. The specifics of how the load balancer will work will be discussed in the following chapters.
