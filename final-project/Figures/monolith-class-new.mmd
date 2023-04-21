@@ -15,6 +15,7 @@ classDiagram
 
     class RoomManager {
         Room[] room
+        EventEmitter bus
     }
 
     RoomManager "1" --> "0..*" Room
@@ -28,12 +29,12 @@ classDiagram
 
     class ClientManager {
         Client[] connections
-        Map roomStates
         Map roomJoins
         Option~WebSocket~ balancer
     }
 
     RoomManager <-- ClientManager: via direct function calls
+    RoomManager --> ClientManager: via event bus
     ClientManager --> Redis
 
     class Client {
