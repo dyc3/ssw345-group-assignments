@@ -22,18 +22,8 @@ classDiagram
     class Room {
         String name
         bool isTemporary
-        Visibility visibility
         RoomUser[] users
         ...
-    }
-
-    Room "1" --> "1" Visibility
-
-    class Visibility {
-        <<enumeration>>
-        Public
-        Unlisted
-        Private
     }
 
     class ClientManager {
