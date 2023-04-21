@@ -62,8 +62,8 @@ classDiagram
 
     DirectClient --|> Client
     BalancerClient --|> Client
-    note for DirectClient "client that connected directly to the Monolith"
-    note for BalancerClient "client that connected via  a Balancer"
+    note for DirectClient "client that connected\ndirectly to the Monolith"
+    note for BalancerClient "client that connected\nvia a Balancer"
 
     class Balancer {
         <<service>>
