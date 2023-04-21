@@ -35,7 +35,7 @@ The load balancer must be able to:
 
 These requirements imply that a normal HTTP load balancer (like nginx) will not work, and the need for a specialized implementation. The specifics of how the load balancer will work will be discussed in the following chapters.
 
-\subsection{New Architecture}
+\section{New Architecture}
 
 With the load balancer, OTT's architecture will look like this: Figure \ref{fig:ott-architecture-with-load-balancer}
 
@@ -45,3 +45,18 @@ With the load balancer, OTT's architecture will look like this: Figure \ref{fig:
   \caption{High level overview of OTT's new architecture with a load balancer}
   \label{fig:ott-architecture-with-load-balancer}
 \end{figure}
+
+Figure \ref{fig:monolith-class-new} shows what the Monolith's internals will look like after we take into account the load balancer.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/monolith-class-new.png}
+  \caption{The Monolith's new internals}
+  \label{fig:monolith-class-new}
+\end{figure}
+
+Note how the connection to the balancer is optional. The main differences between this and figure \ref{fig:monolith-class-current} are:
+\begin{enumerate}
+  \item that Monoliths now have 2 types of clients representing how the client is connecting to the Monolith.
+  \item that the RoomManager and ClientManager no longer communicate through Redis.
+\end{enumerate}
