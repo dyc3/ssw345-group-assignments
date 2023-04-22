@@ -38,10 +38,13 @@ classDiagram
     ClientManager --> Redis
 
     class Client {
+        <<abstract>>
         String id
-        SessionInfo session
         String room
         AuthToken token
+        SessionInfo session
+        ClientJoinStatus joinStatus
+        EventEmitter bus
     }
 
     ClientManager --> Client
