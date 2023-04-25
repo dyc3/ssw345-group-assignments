@@ -57,6 +57,16 @@ The Monoliths will know where to send the gossip messages by reading a configura
   \caption{\label{Figure::gossip-class-diag} Gossip class diagram.}
 \end{figure}
 
+\subsection{Issues with Stateless Balancer}
+
+The load balancer must be able to maintain the list of which rooms each monolith node has loaded. If this does not happen, clients who join the same room will load different instances of the room across different nodes, leading to wasted resources among other issues. The sequence diagram for multiple clients joining the same room through a normal, stateless load balance is shown below in figure \ref{Figure::join-room-stateless} to illustrate this issue.
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/join-room-stateless.png}}
+  \caption{\label{Figure::join-room-stateless} Sequence Diagram for Room Loading on Stateless Balancer.}
+\end{figure}
+
 \section{Creating or Loading Rooms}
 
 The client will have three options: generating a temporary room with a uuid, creating a temporary room with inputs, and creating a permanent room that can be rejoined in the future.

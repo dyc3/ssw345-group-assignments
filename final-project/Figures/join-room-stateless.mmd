@@ -1,0 +1,26 @@
+---
+title: Joining Room with Normal, Stateless Load Balancer
+---
+sequenceDiagram
+    actor Alice
+    actor John
+    participant OTT as OTT website
+    participant L as Load Balancer
+    participant N as Monolith1
+    participant M as Monolith2
+    Alice->>+OTT: Hello, I want to join "foo".
+    OTT->>+L: Take this connection
+    Note over L: Instantiates "foo" on a node
+    L->>+N: Alice joins "foo"
+    N->>-L: Joined
+    L->>-OTT: Joined
+    OTT->>-Alice: Joined
+    Note over Alice,N: Alice's connection to OTT is transparently proxied to Node
+    John->>+OTT: Hello, I want to join "foo".
+    OTT->>+L: Take this connection
+    Note over L: Instantiates "foo" on a node
+    L->>+M: John joins "foo"
+    M->>-L: Joined
+    L->>-OTT: Joined
+    OTT->>-John: Joined
+    Note over John,M: John's connection to OTT is transparently proxied to Node
