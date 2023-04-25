@@ -1,0 +1,20 @@
+C4Container
+title Component diagram for APIProxy for OpenTogetherTube
+
+    Person(customer, Customer, "A user of OTT", $tags="v1.0")
+
+    Container_Boundary(c1, "OpenTogetherTube") {
+    Container(browser, "Browser", "Web Browser", "Used by the user to access the application", "v1.0")
+    Container(server, "Server", "Java", "Serves as the backend for the OpenTogetherTube platform", "v1.0")
+    Container(redis, "Redis", "In-memory data structure store", "Stores session information for authenticated users", "v1.0")
+}
+
+    Rel(customer, browser, "Uses")
+    UpdateRelStyle(customer, browser, $offsetY="60", $offsetX="90")
+    Rel(browser, server, "Login")
+    UpdateRelStyle(browser, server, $offsetY="20", $offsetX="-10")
+    Rel(server, redis, "Generate Token")
+    UpdateRelStyle(server, redis, $offsetY="20", $offsetX="-40")
+    Rel(redis, server, "Return Token Info")
+    UpdateRelStyle(redis, server, $offsetY="-30", $offsetX="-40")
+    Rel(server,browser,"Retrieve Session Info")

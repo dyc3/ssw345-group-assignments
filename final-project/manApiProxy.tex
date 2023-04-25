@@ -23,3 +23,10 @@ server generates a token that is stored in the browser's local storage and inclu
 by the user. The server verifies the token to ensure that the user is authenticated and has permission to access the
 requested video stream. The token is used to look up the session information in Redis, which allows the server to 
 retrieve the user's permissions and session state.
+
+
+\begin{figure}[!htb]
+  \centering
+  \scalebox{0.57}{\includegraphics{Figures/api-component.png}}
+  \caption{\label{Figure::api-com} API Component Diagram.}
+\end{figure}

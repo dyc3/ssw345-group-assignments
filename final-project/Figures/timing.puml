@@ -1,0 +1,50 @@
+@startuml
+
+title Room Creation Timing Diagram
+
+== Initialization ==
+participant Client
+participant Balancer
+participant Monolith
+
+Client -> Balancer: Start new Balancer connection through WebSocket
+
+== Room Generation ==
+participant Balancer
+participant Monolith
+
+Client -> Balancer: Generate temporary room with UUID
+activate Balancer
+Balancer -> Monolith: Pick node to handle room
+activate Monolith
+Monolith -> Client: Connect to room
+
+== Room Creation (Temporary) ==
+participant Balancer
+participant Monolith
+
+Client -> Balancer: Create temporary room with inputs
+activate Balancer
+Balancer -> Monolith: Pick node to handle room
+activate Monolith
+Monolith -> Client: Connect to room
+
+== Room Creation (Permanent) ==
+participant Balancer
+participant Postgres
+participant Monolith
+
+Client -> Balancer: Create permanent room with inputs
+activate Balancer
+Balancer -> Postgres: Store room settings
+activate Postgres
+Postgres -> Balancer: Return room ID
+deactivate Postgres
+Balancer -> Monolith: Pick node to handle room
+activate Monolith
+Monolith -> Client: Connect to room
+
+== Conclusion ==
+Client -> Monolith: Interact with room
+
+@enduml
