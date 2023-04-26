@@ -1,0 +1,51 @@
+classDiagram
+  class Balancer {
+    - roomHashTable: HashTable<Room>
+    - clientRoomMap: Map<ClientConnection, Room>
+    - nodeConnections: List<NodeConnection>
+    + joinRoom(client: ClientConnection, roomId: string): void
+    + leaveRoom(client: ClientConnection): void
+    + forwardMessage(client: ClientConnection, message: Message): void
+    - selectNode(roomId: string): NodeConnection
+    - askNodeForRoom(node: NodeConnection, roomId: string): Room
+    - addRoom(room: Room): void
+    - removeRoom(room: Room): void
+  }
+
+  class NodeConnection {
+    - node: Node
+    - clients: Map<ClientConnection, Room>
+    + addClient(client: ClientConnection, room: Room): void
+    + removeClient(client: ClientConnection): void
+    + sendMessage(message: Message): void
+  }
+
+  class ClientConnection {
+    - client: Client
+    - roomId: string
+    + sendMessage(message: Message): void
+  }
+
+  class Room {
+    - id: string
+    - clients: List<ClientConnection>
+    + addClient(client: ClientConnection): void
+    + removeClient(client: ClientConnection): void
+  }
+
+  class Client {
+    - id: string
+  }
+
+  class Message {
+    - client: Client
+    - room: Room
+    - content: string
+  }
+
+  Balancer --> NodeConnection
+  NodeConnection --> Room
+  ClientConnection --> Balancer
+  ClientConnection --> Room
+  Message --> Client
+  Message --> Room
