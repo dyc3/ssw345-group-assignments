@@ -1,14 +1,14 @@
 C4Container
-title Component diagram for APIProxy for OpenTogetherTube
+title Component diagram for ? for OpenTogetherTube
 
     Person(customer, Customer, "A user of OTT", $tags="v1.0")
 
     Container_Boundary(c1, "OpenTogetherTube") {
     Container(browser, "Browser", "Web Browser", "Used by the user to access the application", "v1.0")
     Container(server, "Server", "Typescript", "Serves as the backend for the OpenTogetherTube platform", "v1.0")
+    Container(reverseproxy, "HTTP API", "HTTP Request", "Distributes incoming traffic among monoliths", "v1.0")
     Container(redis, "Redis", "In-memory data structure store", "Stores session information for authenticated users and used for some caching", "v1.0")
     Container(postgres, "Postgres", "Object-relational database", "v1.0")
-    Container(reverseproxy, "HTTP API Reverse Proxy", "NGINX", "Distributes incoming traffic among monoliths", "v1.0")
 }
 
     Rel(customer, browser, "Uses")
@@ -23,7 +23,7 @@ title Component diagram for APIProxy for OpenTogetherTube
     Rel(server,postgres,"User and Room persistence")
     Rel(postgres, server,"Return user data")
         UpdateRelStyle(postgres, server, $offsetY="-30", $offsetX="-40")
-    Rel(browser, reverseproxy, "Forwards requests")
+    Rel(server, reverseproxy, "Forwards requests")
         UpdateRelStyle(browser, reverseproxy, $offsetY="-30", $offsetX="20")
-    Rel(reverseproxy, server, "Routes requests")
+    Rel(reverseproxy, server, "Reverse Proxy")
         UpdateRelStyle(reverseproxy, server, $offsetY="-30", $offsetX="-20")
