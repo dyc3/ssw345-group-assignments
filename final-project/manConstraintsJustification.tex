@@ -10,3 +10,8 @@ TODO: describe any system constraints
 TODO: describe justification for why leader election will be too complex
 
 TODO: mention constraints imposed by the browser's websocket API (e.g. no custom HTTP headers)
+\section{Browser Websocket API Contraints}
+
+The Websocket API allows for one to open a bidirectional communication session between a browser and a server. The connection session stays open until the browser or server terminates it. 
+This allows for the client and server to send information to the other simultaneously. While useful, it does have constraints. 
+The Websocket API does not allow custom HTTP headers, which means that authorization has to be done after the connection request has been made.
