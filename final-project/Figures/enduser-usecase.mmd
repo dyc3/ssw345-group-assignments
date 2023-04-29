@@ -1,7 +1,8 @@
-  flowchart LR
-    User((User)) -->OpenTogetherTube((OpenTogetherTube))
-    OpenTogetherTube --> Search((Search))
-    Search -->Video((Video))
-    Video --> Watch((Watch))
-    Watch -->Comment((Comment))
-    Watch --> Share((Share))
+graph LR
+  User[User] --- createRoom[Create Room]
+  User --- generateRoom[Generate Room]
+  User --- joinRoom[Join Room]
+  createRoom ---|includes| createTemp[Create Permanent Room] 
+  createRoom ---|includes| createPerm[Create Temporary Room]
+  generateRoom ---|includes| generateTemp[Generate Temporary Room]
+  joinRoom ---|includes| joinLink[Join From Link]
