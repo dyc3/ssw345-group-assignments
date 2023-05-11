@@ -9,15 +9,11 @@ There are 2 types of nodes in this architecture. The first type is the OTT Monol
 
 For the sake of simplicity, the initial implementation of the Balancer will be a single node. This can be upgraded to a cluster of load balancers in the future.
 
-
-TODO: describe the room join process
-TODO: be sure to talk about how clients are authorized
-
 \section{Joining a Loaded Room \index{loaded room}}
 
 In the Monolith, "loading" a room is literally creating an instance of a room in memory.
 
-Shown in figure \ref{Figure::join-room-happy-path}, the client is joining a room that is already loaded on a Monolith node. First, the client initiates a websocket \index{websocket} connection to the Balancer, in the form of a HTTP request with the CONNECT method. The client immediately sends an "auth" message to convey their identity to the Balancer. The Balancer looks at the path of the request and extracts the room name, and references it's internal hashmap to find the monolith that is hosting the room. The Balancer then opens a websocket connection using the auth token provided by the client.
+Shown in figure \ref{Figure::join-room-happy-path}, the client is joining a room that is already loaded on a Monolith node. First, the client initiates a websocket \index{websocket} connection to the Balancer, in the form of a HTTP request with the GET method, and headers to indicate that a protocol upgrade is required. The client immediately sends an "auth" message to convey their identity to the Balancer. The Balancer looks at the path of the request and extracts the room name, and references it's internal hashmap to find the monolith that is hosting the room. The Balancer then opens a websocket connection using the auth token provided by the client.
 
 If the client fails to provide an auth token, the Balancer must terminate the connection as "timed out".
 
@@ -81,23 +77,22 @@ Rooms are only kept loaded in memory if there are clients that are connected to 
   \caption{\label{Figure::room-keepalive-timing} A timing diagram describing the lifetime of a loaded Room in a Monolith's memory.}
 \end{figure}
 
-\subsection{Monolith Node Selection}
+\subsection{Monolith Node Selection \label{Section::MonolithNodeSelection}}
 
-\subsection{Unloaded Room}
-When a user tries to join a permanent room in OpenTogetherTube, the request is first received by the load balancer. 
-The load balancer forwards the request to one of the available servers (Server1 or Server2) based on the current load
-balancing algorithm. The selected server then checks if the requested room is already loaded by querying the database. 
-If the room is already loaded, the server redirects the user to the room. Otherwise, the server requests the database to 
-load the room. Once the room is loaded, the server creates a new room instance and adds it to the list of loaded rooms. 
-The server then redirects the user to the loaded room through the load balancer. If the first server doesn't have the
-room loaded, the load balancer forwards the request to the second server and the same process is repeated.
+The Balancer must be able to select the Monolith that is most appropriate to handle the join. Specifically,
+
+\begin{enumerate}
+  \item If the requested room is already loaded, the Balancer must select the Monolith that is hosting the room.
+  \item Otherwise, the Balancer must select the Monolith with the lowest number of loaded rooms. The Monolith will load the room on demand, if it exists in the database.
+\end{enumerate}
+
+\section{Joining an Unloaded Room \index{unloaded room} \index{room!unloaded}}
+When a user tries to join a permanent room in OpenTogetherTube, the request is first received by the Balancer\index{balancer}.
+The Balancer forwards the request to one of the available Monoliths \index{monolith} based on the current load balancing algorithm (See \ref{Section::MonolithNodeSelection}).
+This process is shown in figure \ref{Figure::unloaded-room}.
 
 \begin{figure}[!htb]
   \centering
   \scalebox{0.57}{\includegraphics{Figures/unloaded-room.png}}
-  \caption{\label{Figure::unloaded-room} Unloaded Room Sequence Diagram.}
+  \caption{\label{Figure::unloaded-room} Sequence diagram for a client joining an unloaded room.}
 \end{figure}
-
-For the sequence diagram above, it's worth noting that the current implementation doesn't necessarily use an HTTP
-redirect to direct the user to the requested room. Instead, the response from the server may include a URL or other
-information that allows the user's client to connect directly to the appropriate room instance.
