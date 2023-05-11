@@ -41,7 +41,7 @@ classDiagram
         clients: Vec~ClientId~
     }
 
-    BalancerMonolith --o Room
+    Room --o BalancerMonolith
 
     class BalancerClient {
         client_id: ClientId

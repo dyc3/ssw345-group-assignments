@@ -6,5 +6,6 @@ stateDiagram-v2
     [*] --> wait: New connection
     wait --> proxied: Auth message received
     proxied --> disconnected: Websocket connection terminated
+    proxied --> proxied
     wait --> disconnected: Time out after 10s
     disconnected --> [*]
