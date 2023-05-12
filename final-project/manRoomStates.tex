@@ -6,7 +6,7 @@
 \section{Lost Balancer-Monolith Connections}
 
 When a Balancer-Monolith connection is lost, clients connected to that monolith need to be handled appropriately. Otherwise, the accuracy of room state is compromised. 
-Without the balancer properly accepting the websocket connection, it is no longer viable and all clients connected to the balancer need to be disconnected and removed 
+All client connections that are in rooms on the lost monolith are no longer valid, so they need to be disconnected and removed 
 from their rooms. From there, they can reconnect to a monolith with a new websocket connection to the balancer. 
 
 \section{Duplicate Rooms Across Monoliths}
