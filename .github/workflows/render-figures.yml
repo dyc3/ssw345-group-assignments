@@ -15,6 +15,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
       - run: npm install -g @mermaid-js/mermaid-cli
+      - run: sudo apt-get install -y graphviz
       - run: ./final-project/render-figures.sh
       - uses: EndBug/add-and-commit@v9
         with:
