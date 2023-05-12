@@ -57,6 +57,6 @@ Figure \ref{Figure::monolith-class-new} shows what the Monolith's internals will
 
 Note how the connection to the balancer is optional. The main differences between this and figure \ref{Figure::monolith-class-current} are:
 \begin{enumerate}
-  \item that Monoliths now have 2 types of clients representing how the client is connecting to the Monolith.
-  \item that the RoomManager and ClientManager no longer communicate through Redis.
+  \item Monoliths now have 2 types of clients representing how the client is connecting to the Monolith.
+  \item The RoomManager and ClientManager no longer communicate through Redis.
 \end{enumerate}
