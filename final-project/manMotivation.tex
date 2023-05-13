@@ -3,7 +3,23 @@
   \index{Chapter!motivation}
   \label{Chapter::Motivation}}
 
-OpenTogetherTube is a website that allows users to watch videos together. It is a free and open source alternative to services like Watch2Gether and Kosmi. It is currently deployed at \href{https://opentogethertube.com}{opentogethertube.com}. The website is built using a monolithic architecture in Node.js. While this was a huge boon initially for developing new features quickly, it's starting to show it's cracks. This architecture has a few drawbacks:
+OpenTogetherTube is a website that allows users to watch videos together. It is a free and open source alternative to services like Watch2Gether and Kosmi. It is currently deployed at \href{https://opentogethertube.com}{opentogethertube.com}. The website is built using a monolithic architecture in Node.js. While this was a huge boon initially for developing new features quickly, it's starting to show it's cracks.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/deployment-current.png}
+  \caption{High level overview of the current, typical OTT production deployment}
+  \label{Figure::deployment-current}
+\end{figure}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/components-monolith.png}
+  \caption{High level overview OTT's internal components}
+  \label{Figure::components-monolith}
+\end{figure}
+
+This architecture has a few drawbacks:
 
 \begin{enumerate}
   \item It is impossible to scale the application horizontally. This means that the application can only be scaled vertically, which is more expensive, and has limits.
