@@ -89,3 +89,9 @@ Similarly, when a client disconnects, the Balancer must send a message to the Mo
 \end{verbatim}
 
 These messages conform to the the protocol defined by the types in the \href{https://github.com/dyc3/opentogethertube/blob/master/common/models/messages.ts}{OTT monolith here}.
+
+\section{Messages sent during Monolith connection startup}
+
+When a Monolith starts up, and it has balancers configured, it must initiate a websocket connection to each of the balancers. The Monolith must send an "init" message to the Balancer to inform it of the port that it is listening for HTTP requests on, and an auth token to verify authenticity.
+
+Once the Balancer receives this message, the connection is considered established, and the Monolith and Balancer can begin sending messages to each other.
