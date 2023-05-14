@@ -26,13 +26,14 @@ retrieve the user's permissions and session state.
 
 \section{OpenAPI Endpoints Route Specification}
 
-The table below shows each API endpoint and the route it will lead to. Additionally, it describes the function of each endpoint.
+Table \ref{tbl:endpoints} shows each API endpoint and the route it will lead to. Additionally, it describes the function of each endpoint.
 
 
 \begin{table}[htbp]
   \centering
   \caption{API Endpoints}
-  \begin{tabular}{|c|l|c|p{6.5cm}|}
+  \label{tbl:endpoints}
+  \begin{tabular}{|c|l|c|p{5.5cm}|}
     \hline
     \textbf{Category} & \textbf{Endpoint} & \textbf{Methods} & \textbf{Description} \\
     \hline
@@ -81,10 +82,11 @@ The table below shows each API endpoint and the route it will lead to. Additiona
 
 The routing between categories can be determined based on the relationships between the endpoints and the logical flow of the application. For example, endpoints within the "Room" category may have routes connecting to each other within the category, while endpoints in different categories may have separate routes. 
 
-A flowchart is shown below that demonstartes the potential path when using OpenTogetherTube.
-
-\begin{figure}[!htb]
-  \centering
-  \scalebox{0.57}{\includegraphics{Figures/api-flow.png}}
-  \caption{\label{Figure::api-flow} API Flowchart.}
-\end{figure}
+API Specifications:
+\begin{itemize}
+  \item All /api/room/:roomName endpoints are routed to a specific monolith based on the :roomName parameter.
+  \item /api/room/generate and /api/room/create are routed to the monolith with the least number of rooms.
+  \item /api/room/list is a special case and will list rooms from all monoliths.
+  \item /api/status and /api/status/metrics should not be forwarded as their responses are specific to each monolith and are only used for monitoring purposes.
+  \item All other endpoints are stateless and can be routed to any available monolith.
+\end{itemize}
