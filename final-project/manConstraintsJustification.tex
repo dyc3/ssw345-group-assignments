@@ -11,7 +11,7 @@ TODO: describe justification for why leader election will be too complex
 
 \section{Browser Websocket API Contraints}
 
-The Websocket API allows for one to open a bidirectional communication session between a browser and a server. The connection session stays open until the browser or server terminates it. 
+The Websocket API allows for one to open a bidirectional communication session between a browser and a server. The connection session stays open until the browser or server terminates it.
 This allows for the client and server to send information to the other simultaneously. The browser's API does not allow custom HTTP headers, which means that authorization has to be done after the connection request has been made \cite{MDNWebSocket} \cite{HerokuWebSocket}.
 
 \subsection{Issues with Stateless Balancer}
@@ -36,3 +36,7 @@ Once the load balancer is implemented, the current deployments of OTT must conti
 \section{Deployment Must Work Without Load Balancer}
 
 Not all self-hosters of OTT might want the added complexity of the load balancer, so it must remain possible to deploy OTT without it. It would also be beneficial to be able to quickly reroute traffic between the balancer and the monolith during the initial deployment stage.
+
+\section{Low Budget}
+
+Implementation and deployment of the load balancer must be possible on the smallest budget possible, because OTT is a free service and the maintainer is a student.
